@@ -4,11 +4,12 @@
 #include <conio.h>
 #include <time.h>
 
-#define row 15
+#define row 12
 #define column 7
 
 using namespace std;
-int ox = 5; // مختصات سر مار
+int ox = 3; // مختصات سر مار
+int speed = 400;
 unsigned int point = 0;
 void delay(int ms)
 {
@@ -30,7 +31,8 @@ void printBoard(string array[][column])
         cout << endl;
     }
     cout << "-----------------------------" << endl;
-    delay(350);
+    delay(speed);
+    speed--;
 }
 void frogStatus(int random, string array[][column], int down)
 {
@@ -65,23 +67,28 @@ bool checkStatus(string board[][column], int OX)
         }
     }
 }
-
 void snakeStatus(char playerMove, string board[][column])
 {
 
     if (playerMove == 'a' || playerMove == 'd')
     {
-        cout << playerMove << endl;
         if (playerMove == 'a')
         {
             board[row - 1][ox] = "   ";
-            ox -= 1;
+            if (ox > 0)// check out of range
+            {
+                ox -= 1;
+            }
+
             board[row - 1][ox] = " ^ ";
         }
         if (playerMove == 'd')
         {
             board[row - 1][ox] = "   ";
-            ox += 1;
+            if (ox < column -1) // check out of range
+            {
+                ox += 1;
+            }
             board[row - 1][ox] = " ^ ";
         }
     }
@@ -111,8 +118,7 @@ void app(string array[][column])
     {
         int random = generateRandom();
 
-       
-        for (int i = 0; i < row; i++ )
+        for (int i = 0; i < row; i++)
         {
 
             if (_kbhit())
@@ -122,7 +128,7 @@ void app(string array[][column])
             }
 
             frogStatus(random, array, i);
-            if(checkStatus(array, ox))
+            if (checkStatus(array, ox))
             {
                 i += 2;
             };
