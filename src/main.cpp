@@ -5,7 +5,7 @@
 #include <time.h>
 
 #define row 12
-#define column 7
+#define column 9
 
 using namespace std;
 int ox = 3; // مختصات سر مار
@@ -17,31 +17,33 @@ void delay(int ms)
     while (clock() < start + ms)
         ;
 }
-void printBoard(string array[][column])
+void printBoard(string board[][column])
 {
     system("cls");
-    cout << "point : " << point << endl;
+    cout << "point : " << point << "\n"
+         << endl;
     for (size_t i = 0; i < row; i++)
     {
         cout << "|";
         for (size_t j = 0; j < column; j++)
         {
-            cout << array[i][j] << "|";
+            cout << board[i][j];
         }
+        cout << "|";
         cout << endl;
     }
     cout << "-----------------------------" << endl;
     delay(speed);
     speed--;
 }
-void frogStatus(int random, string array[][column], int down)
+void frogStatus(int random, string board[][column], int down)
 {
     for (size_t i = 0; i < down; i++)
     {
-        array[i][random] = "   ";
+        board[i][random] = "   ";
     }
 
-    array[down][random] = " * ";
+    board[down][random] = " * ";
 }
 bool checkStatus(string board[][column], int OX)
 {
@@ -75,7 +77,7 @@ void snakeStatus(char playerMove, string board[][column])
         if (playerMove == 'a')
         {
             board[row - 1][ox] = "   ";
-            if (ox > 0)// check out of range
+            if (ox > 0) // check out of range
             {
                 ox -= 1;
             }
@@ -85,7 +87,7 @@ void snakeStatus(char playerMove, string board[][column])
         if (playerMove == 'd')
         {
             board[row - 1][ox] = "   ";
-            if (ox < column -1) // check out of range
+            if (ox < column - 1) // check out of range
             {
                 ox += 1;
             }
@@ -93,26 +95,29 @@ void snakeStatus(char playerMove, string board[][column])
         }
     }
 }
-void createBoard(string array[][column])
+void createBoard(string board[][column])
 {
 
     for (size_t i = 0; i < row; i++)
     {
         for (size_t j = 0; j < column; j++)
         {
-            array[i][j] = "   ";
+            board[i][j] = "   ";
         }
     }
 }
-
 int generateRandom()
 {
     srand((unsigned)time(NULL));
     int random = rand() % column;
     return random;
 }
-void app(string array[][column])
+void app()
 {
+    string board[row][column];
+    createBoard(board);
+    printBoard(board);
+    board[row - 1][ox] = " ^ ";
 
     while (1)
     {
@@ -124,16 +129,16 @@ void app(string array[][column])
             if (_kbhit())
             {
                 char ch = _getch();
-                snakeStatus(ch, array);
+                snakeStatus(ch, board);
             }
 
-            frogStatus(random, array, i);
-            if (checkStatus(array, ox))
+            frogStatus(random, board, i);
+            if (checkStatus(board, ox))
             {
                 i += 2;
             };
 
-            printBoard(array);
+            printBoard(board);
         }
     }
 }
@@ -141,12 +146,7 @@ void app(string array[][column])
 int main()
 {
 
-    string board[row][column];
-    createBoard(board);
-    printBoard(board);
-    board[row - 1][ox] = " ^ ";
-
-    app(board);
+    app();
 
     return 0;
 }
