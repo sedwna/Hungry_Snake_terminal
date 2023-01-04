@@ -1,28 +1,30 @@
-
+#include "../include/frog.hpp"
+#include "../include/snake.hpp"
 #ifndef APP_IG
 #define APP_IG
 #include <string>
+#include <array>
 #define row 12
 #define column 9
-
 
 class App
 {
 private:
+    Frog frog;
+    Snake snake;
     void help() const;
     void clear() const;
     void lowercase(std::string &);
     void runGame();
     void delay(int ms);
     void printBoard(std::string board[][column]);
-    void frogStatus(int random, std::string board[][column], int down);
     bool checkStatus(std::string board[][column], int OX);
-    void snakeStatus(char playerMove, std::string board[][column]);
     void createBoard(std::string board[][column]);
-    int generateRandom();
 
 public:
     App();
+    int speed = 350;
+    unsigned int point = 0;
     void splashScreen() const;
     int exec();
 };

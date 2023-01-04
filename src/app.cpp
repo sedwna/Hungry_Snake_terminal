@@ -7,15 +7,15 @@
 #include <time.h>
 #include <conio.h>
 
-int ox = 3; // مختصات سر مار
-int speed = 350;
-unsigned int point = 0;
+
 using namespace std;
 
+// -------------------------------------------------------
 App::App()
 {
     splashScreen();
 }
+// -------------------------------------------------------
 void App::splashScreen() const
 {
 
@@ -31,6 +31,7 @@ void App::splashScreen() const
          << "Enter <help> command to guide you\n"
          << endl;
 }
+// -------------------------------------------------------
 void App::help() const
 {
     cout << "[<!>] "
@@ -39,6 +40,7 @@ void App::help() const
     cout << "for start game enter : s"
          << endl;
 }
+// -------------------------------------------------------
 int App::exec()
 {
     string command;
@@ -84,40 +86,17 @@ int App::exec()
          << "app finished" << endl;
     return EXIT_SUCCESS;
 }
-
-void App::lowercase(string &str)
-{
-    if (cin.eof() || str.empty())
-    {
-        return;
-    }
-
-    for (char &ch : str)
-    {
-        ch = tolower(ch);
-    }
-}
-void App::clear() const
-{
-#ifdef WINDOWS // windows based OS
-    std::system("cls");
-#else // unix like OS
-    std::system("clear");
-#endif
-
-    splashScreen();
-}
-
+// -------------------------------------------------------
 void App::runGame()
 {
     string board[row][column];
     createBoard(board);
     printBoard(board);
-    board[row - 1][ox] = " ^ ";
+    board[row - 1][snake.ox] = " ^ ";
 
     while (1)
     {
-        int random = generateRandom();
+        int random = frog.generateRandom();
 
         for (int i = 0; i < row; i++)
         {
@@ -125,11 +104,11 @@ void App::runGame()
             if (_kbhit())
             {
                 char ch = _getch();
-                snakeStatus(ch, board);
+                snake.snakeStatus(ch, board);
             }
 
-            frogStatus(random, board, i);
-            if (checkStatus(board, ox))
+            frog.frogStatus(random, board, i);
+            if (checkStatus(board, snake.ox))
             {
                 i += 2;
             };
@@ -138,12 +117,14 @@ void App::runGame()
         }
     }
 }
+// -------------------------------------------------------
 void App::delay(int ms)
 {
     clock_t start = clock();
     while (clock() < start + ms)
         ;
 }
+// -------------------------------------------------------
 void App::printBoard(string board[][column])
 {
     system("cls");
@@ -163,15 +144,7 @@ void App::printBoard(string board[][column])
     delay(speed);
     speed--;
 }
-void App::frogStatus(int random, string board[][column], int down)
-{
-    for (size_t i = 0; i < down; i++)
-    {
-        board[i][random] = "   ";
-    }
-
-    board[down][random] = " * ";
-}
+// -------------------------------------------------------
 bool App::checkStatus(string board[][column], int OX)
 {
 
@@ -196,32 +169,7 @@ bool App::checkStatus(string board[][column], int OX)
         }
     }
 }
-void App::snakeStatus(char playerMove, string board[][column])
-{
-
-    if (playerMove == 'a' || playerMove == 'd')
-    {
-        if (playerMove == 'a')
-        {
-            board[row - 1][ox] = "   ";
-            if (ox > 0) // check out of range
-            {
-                ox -= 1;
-            }
-
-            board[row - 1][ox] = " ^ ";
-        }
-        if (playerMove == 'd')
-        {
-            board[row - 1][ox] = "   ";
-            if (ox < column - 1) // check out of range
-            {
-                ox += 1;
-            }
-            board[row - 1][ox] = " ^ ";
-        }
-    }
-}
+// -------------------------------------------------------
 void App::createBoard(string board[][column])
 {
 
@@ -233,9 +181,29 @@ void App::createBoard(string board[][column])
         }
     }
 }
-int App::generateRandom()
+// -------------------------------------------------------
+void App::lowercase(string &str)
 {
-    srand((unsigned)time(NULL));
-    int random = rand() % column;
-    return random;
+    if (cin.eof() || str.empty())
+    {
+        return;
+    }
+
+    for (char &ch : str)
+    {
+        ch = tolower(ch);
+    }
 }
+// -------------------------------------------------------
+void App::clear() const
+{
+#ifdef WINDOWS // windows based OS
+    std::system("cls");
+#else // unix like OS
+    std::system("clear");
+#endif
+
+    splashScreen();
+}
+// -------------------------------------------------------
+
