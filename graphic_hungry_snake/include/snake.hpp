@@ -3,7 +3,10 @@
 class Snake
 {
 private:
+    int snakeSpeed = 10;
+
 public:
-    int moveSpeed = 10;
-    void snakeSpeed();
+    void set_snakeSpeed();
+    int get_snakeSpeed();
+
 };

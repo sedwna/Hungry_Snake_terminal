@@ -1,4 +1,7 @@
 #pragma once
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <sstream>
 #include <time.h>
 #include <iomanip>
 #define x_SIZE 800
@@ -7,9 +10,11 @@
 class Frog
 {
 private:
-    /* data */
+     float frogSpeed = 1;
 public:
     // Frog(/* args */);
     int frogStartpos();
-    float speed = 1;
+    void frog_setSpeed();
+    float frog_getSpeed();
+   
 };

@@ -5,12 +5,10 @@
 class App
 {
 private:
-   
-    
+    Game game;
+    void menu();
 
 public:
     App();
-    Game game;
-    void splashScreen();
-
+    int splashScreen();
 };

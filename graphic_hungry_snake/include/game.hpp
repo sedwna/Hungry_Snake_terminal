@@ -14,17 +14,33 @@
 #include <iostream>
 #include <time.h>
 #include <iomanip>
+#include <string>
 
 #include <conio.h>
 class Game
 {
 private:
-  
     int score = 0;
+    std::string set_score();
+    void tryAgain(sf::RenderWindow &window, sf::Text point);
+    //----------------- set sound -----------------
+    sf::SoundBuffer back_sound;
+    sf::SoundBuffer eat_sound;
+    sf::SoundBuffer gameover_sound;
+    //---------------------------------------------
+    //------------------- set font ----------------
+    sf::Font font;
+    //---------------------------------------------
+
+    //------------------ set photo ----------------
+    sf::Texture texture;
+    sf::Texture snake_image;
+    sf::Texture frog_image;
+    //---------------------------------------------
 
 public:
     // Game(/* args */);
     Frog frog;
     Snake snake;
-    void runGame();
+    void runGame(sf::RenderWindow &window);
 };

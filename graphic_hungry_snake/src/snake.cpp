@@ -1,6 +1,10 @@
-#include "../include/snake.hpp" 
+#include "../include/snake.hpp"
 
-void Snake::snakeSpeed()
+void Snake::set_snakeSpeed()
 {
-    moveSpeed += 1;
+    snakeSpeed += 1;
+}
+int Snake::get_snakeSpeed()
+{
+    return snakeSpeed;
 }
