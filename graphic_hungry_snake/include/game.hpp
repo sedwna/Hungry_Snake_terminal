@@ -15,6 +15,7 @@
 #include <time.h>
 #include <iomanip>
 #include <string>
+#include<fstream>
 
 #include <conio.h>
 class Game

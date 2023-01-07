@@ -1,5 +1,6 @@
 #include "../include/game.hpp"
 using namespace std;
+#include <ctype.h>
 
 void Game::runGame(sf::RenderWindow &window)
 {
@@ -109,6 +110,7 @@ void Game::runGame(sf::RenderWindow &window)
             frog_shape.setPosition(sf::Vector2f(frog.frogStartpos(), -50));
             frog.frog_setSpeed();
             // ---- update player point-----
+            score++;
             point.setString(set_score());
             // -----------------------------
             snake.set_snakeSpeed();
@@ -137,7 +139,7 @@ void Game::runGame(sf::RenderWindow &window)
 }
 string Game::set_score()
 {
-    score++;
+
     stringstream temp;
     temp << score;
     string point;
@@ -146,36 +148,99 @@ string Game::set_score()
 }
 void Game::tryAgain(sf::RenderWindow &window, sf::Text point)
 {
+    // ----------- write score in file ---------
+    std::ofstream myFile("record_status.txt", ios::app);
+    myFile << set_score() << std::endl;
+    myFile.close();
+    //------------------------------------------
 
-    sf::Texture texture;
-    sf::Texture start_icon;
+    // ----------------- set photo -----------
+    sf::Texture back_blur;
+    sf::Texture tryAgain_icon;
     sf::Texture exit_icon;
+    // -----------------------------------------
 
+    // ----------- handle input ----------------
     try
     {
         font.loadFromFile("font.ttf");
-        texture.loadFromFile("back_blur.png");
-        start_icon.loadFromFile("tryagain.png");
+        back_blur.loadFromFile("back_blur.png");
+        tryAgain_icon.loadFromFile("tryagain.png");
         exit_icon.loadFromFile("exit_icon.png");
     }
     catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
     }
-    sf::RectangleShape texture_shape(sf::Vector2f(x_SIZE, y_SIZE));
-    sf::RectangleShape startIcon_shape(sf::Vector2f(200, 100));
+    // -----------------------------------------
+
+    // ---------- photo to shape ---------------
+
+    sf::RectangleShape back_blur_shape(sf::Vector2f(x_SIZE, y_SIZE));
+    sf::RectangleShape tryAgainIcon_shape(sf::Vector2f(200, 100));
     sf::RectangleShape exitIcon_shape(sf::Vector2f(100, 50));
 
-    texture_shape.setTexture(&texture);
-    startIcon_shape.setTexture(&start_icon);
+    back_blur_shape.setTexture(&back_blur);
+    tryAgainIcon_shape.setTexture(&tryAgain_icon);
     exitIcon_shape.setTexture(&exit_icon);
+    // -----------------------------------------
 
-    sf::Text text("your score is : ", font);
-    text.setPosition(sf::Vector2f(250, 200));
-    point.setPosition(sf::Vector2f(450 , 205));
+    // ----- handel text and set pos shape  ----
+
+    sf::Text score_text("your score is : ", font);
+    sf::Text record_text("high score is : ", font);
+    sf::Text High_Score("High_score", font);
+    High_Score.setPosition(sf::Vector2f(610, 220));
+    High_Score.setCharacterSize(15);
+    High_Score.setFillColor(sf::Color::Black);
+
+    record_text.setPosition(sf::Vector2f(500, 220));
+    score_text.setPosition(sf::Vector2f(250, 200));
+    record_text.setCharacterSize(15);
+    record_text.setFillColor(sf::Color::Black);
+    point.setPosition(sf::Vector2f(450, 205));
     point.setFillColor(sf::Color::White);
-    startIcon_shape.setPosition(sf::Vector2f(300, 280));
+    tryAgainIcon_shape.setPosition(sf::Vector2f(300, 280));
     exitIcon_shape.setPosition(sf::Vector2f(350, 400));
+    // -----------------------------------------
+
+    // -------- read high score from file ------
+    int high_score = 0;
+    fstream my_file;
+    my_file.open("record_status.txt", ios::in);
+    if (!my_file)
+    {
+        cout << "No such file";
+    }
+    else
+    {
+        string s;
+        int str = 0;
+
+        while (getline(my_file, s))
+        {
+            cout << "string " << s << endl;
+            str = stoi(s);
+            cout << "int " << str << endl;
+            if (my_file.eof())
+            {
+                break;
+            }
+            if (str > high_score)
+            {
+                high_score = str;
+            }
+        }
+        stringstream temp;
+        temp << high_score;
+        string High_score;
+        temp >> High_score;
+        High_Score.setString(High_score);
+    }
+    my_file.close();
+
+    // -----------------------------------------
+
     while (window.isOpen())
     {
         sf ::Event event;
@@ -192,7 +257,7 @@ void Game::tryAgain(sf::RenderWindow &window, sf::Text point)
                 window.close();
             }
         }
-        if (startIcon_shape.getGlobalBounds().contains(mouse))
+        if (tryAgainIcon_shape.getGlobalBounds().contains(mouse))
         {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
@@ -206,14 +271,16 @@ void Game::tryAgain(sf::RenderWindow &window, sf::Text point)
                 window.close();
             }
         }
-
+        // ----------------- handle rendering ------------
         window.clear();
-        
-        window.draw(texture_shape);
-        window.draw(text);
-        window.draw(startIcon_shape);
+        window.draw(back_blur_shape);
+        window.draw(score_text);
+        window.draw(record_text);
+        window.draw(tryAgainIcon_shape);
         window.draw(exitIcon_shape);
         window.draw(point);
+        window.draw(High_Score);
         window.display();
+        // -----------------------------------------------
     }
 }

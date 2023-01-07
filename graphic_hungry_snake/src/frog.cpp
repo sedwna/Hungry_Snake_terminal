@@ -15,6 +15,5 @@ void Frog::frog_setSpeed()
 }
 float Frog::frog_getSpeed()
 {
-
     return frogSpeed;
 }
