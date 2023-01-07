@@ -10,5 +10,4 @@ private:
 
 public:
     App();
-    int splashScreen();
 };

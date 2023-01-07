@@ -1,7 +1,6 @@
+#pragma once
 #include "../include/frog.hpp"
 #include "../include/snake.hpp"
-#ifndef APP_IG
-#define APP_IG
 #include <string>
 #include <array>
 #define row 12
@@ -29,4 +28,3 @@ public:
     int exec();
 };
 
-#endif

@@ -18,9 +18,9 @@ void App::menu()
 
     try
     {
-        texture.loadFromFile("back_blur.png");
-        start_icon.loadFromFile("start_icon.png");
-        exit_icon.loadFromFile("exit_icon.png");
+        texture.loadFromFile("picture/back_blur.png");
+        start_icon.loadFromFile("picture/start_icon.png");
+        exit_icon.loadFromFile("picture/exit_icon.png");
     }
     catch (const std::exception &e)
     {

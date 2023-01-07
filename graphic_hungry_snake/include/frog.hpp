@@ -12,7 +12,6 @@ class Frog
 private:
      float frogSpeed = 1;
 public:
-    // Frog(/* args */);
     int frogStartpos();
     void frog_setSpeed();
     float frog_getSpeed();

@@ -10,14 +10,14 @@ void Game::runGame(sf::RenderWindow &window)
     // --------------- handle input from file -----
     try
     {
-        font.loadFromFile("font.ttf");
-        back_sound.loadFromFile("back_sound.wav");
-        eat_sound.loadFromFile("eat_sound.wav");
-        gameover_sound.loadFromFile("gameover_sound.wav");
-        texture.loadFromFile("back.jpg");
-        frog_image.loadFromFile("frog.png");
-        frog2_image.loadFromFile("frog.png");
-        snake_image.loadFromFile("snake.png");
+        font.loadFromFile("font/font.ttf");
+        back_sound.loadFromFile("sound/back_sound.wav");
+        eat_sound.loadFromFile("sound/eat_sound.wav");
+        gameover_sound.loadFromFile("sound/gameover_sound.wav");
+        texture.loadFromFile("picture/back.jpg");
+        frog_image.loadFromFile("picture/frog.png");
+        frog2_image.loadFromFile("picture/frog.png");
+        snake_image.loadFromFile("picture/snake.png");
     }
     catch (const std::exception &e)
     {
@@ -198,10 +198,10 @@ void Game::tryAgain(sf::RenderWindow &window, sf::Text point)
     // ----------- handle input ----------------
     try
     {
-        font.loadFromFile("font.ttf");
-        back_blur.loadFromFile("back_blur.png");
-        tryAgain_icon.loadFromFile("tryagain.png");
-        exit_icon.loadFromFile("exit_icon.png");
+        font.loadFromFile("font/font.ttf");
+        back_blur.loadFromFile("picture/back_blur.png");
+        tryAgain_icon.loadFromFile("picture/tryagain.png");
+        exit_icon.loadFromFile("picture/exit_icon.png");
     }
     catch (const std::exception &e)
     {
