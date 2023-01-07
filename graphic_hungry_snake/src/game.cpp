@@ -16,6 +16,7 @@ void Game::runGame(sf::RenderWindow &window)
         gameover_sound.loadFromFile("gameover_sound.wav");
         texture.loadFromFile("back.jpg");
         frog_image.loadFromFile("frog.png");
+        frog2_image.loadFromFile("frog.png");
         snake_image.loadFromFile("snake.png");
     }
     catch (const std::exception &e)
@@ -47,20 +48,25 @@ void Game::runGame(sf::RenderWindow &window)
     //----------------- handle photo --------------
     sf::RectangleShape rectengle(sf::Vector2f(800, 600));
     sf::RectangleShape frog_shape(sf::Vector2f(50, 50));
+    sf::RectangleShape frog2_shape(sf::Vector2f(50, 50));
     sf::RectangleShape snake_shape(sf::Vector2f(130, 120));
     rectengle.setTexture(&texture);
     snake_shape.setTexture(&snake_image);
     frog_shape.setTexture(&frog_image);
+    frog2_shape.setTexture(&frog2_image);
     //---------------------------------------------
 
     //---- set start positin for frog and snake ---
     snake_shape.setPosition(sf::Vector2f(x_SIZE / 2, y_SIZE - 100));
-    frog_shape.setPosition(sf::Vector2f(frog.frogStartpos(), -50));
+    frog_shape.setPosition(sf::Vector2f(frog1.frogStartpos(), -50));
+    frog2_shape.setPosition(sf::Vector2f(frog1.frogStartpos(), -50));
     //---------------------------------------------
 
     //----------- handle screen window ------------
+    bool frog_2 = false;
     while (window.isOpen())
     {
+
         //------ poll and check event from mouse and keyboard -------
         sf::Event event;
         while (window.pollEvent(event))
@@ -96,10 +102,21 @@ void Game::runGame(sf::RenderWindow &window)
                 //---------------------------------------------
             }
         }
+
         //---------------------------------------------
 
+        if (frog_shape.getPosition().y > 200)
+        {
+            frog_2 = true;
+        }
+        if (frog_2)
+        {
+            frog2_shape.move(sf::Vector2f(0, frog1.frog_getSpeed()));
+        }
+
         //--------- down frog from line ---------------
-        frog_shape.move(sf::Vector2f(0, frog.frog_getSpeed()));
+        frog_shape.move(sf::Vector2f(0, frog1.frog_getSpeed()));
+
         //---------------------------------------------
 
         //------ check hit between snake and frog ------
@@ -107,8 +124,19 @@ void Game::runGame(sf::RenderWindow &window)
         {
 
             eat.play();
-            frog_shape.setPosition(sf::Vector2f(frog.frogStartpos(), -50));
-            frog.frog_setSpeed();
+            frog_shape.setPosition(sf::Vector2f(frog1.frogStartpos(), -50));
+            frog1.frog_setSpeed();
+            // ---- update player point-----
+            score++;
+            point.setString(set_score());
+            // -----------------------------
+            snake.set_snakeSpeed();
+        }
+        if (frog2_shape.getGlobalBounds().intersects(snake_shape.getGlobalBounds()))
+        {
+
+            eat.play();
+            frog2_shape.setPosition(sf::Vector2f(frog1.frogStartpos(), -50));
             // ---- update player point-----
             score++;
             point.setString(set_score());
@@ -123,12 +151,18 @@ void Game::runGame(sf::RenderWindow &window)
             gameover.play();
             tryAgain(window, point);
         }
+        if (frog2_shape.getPosition().y > y_SIZE)
+        {
+            gameover.play();
+            tryAgain(window, point);
+        }
         //---------------------------------------------
 
         //----------- handle rendering ----------------
         window.clear();
         window.draw(rectengle);
         window.draw(frog_shape);
+        window.draw(frog2_shape);
         window.draw(snake_shape);
         window.draw(point);
         window.draw(text);
@@ -137,6 +171,7 @@ void Game::runGame(sf::RenderWindow &window)
     }
     //---------------------------------------------
 }
+// --------------------------------------------------------------------------------------------------
 string Game::set_score()
 {
 
@@ -219,9 +254,7 @@ void Game::tryAgain(sf::RenderWindow &window, sf::Text point)
 
         while (getline(my_file, s))
         {
-            cout << "string " << s << endl;
             str = stoi(s);
-            cout << "int " << str << endl;
             if (my_file.eof())
             {
                 break;
@@ -259,6 +292,9 @@ void Game::tryAgain(sf::RenderWindow &window, sf::Text point)
         }
         if (tryAgainIcon_shape.getGlobalBounds().contains(mouse))
         {
+            score = 0;
+            frog1.frog_speed_reset();
+            snake.reset_snakeSpeed();
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
                 runGame(window);

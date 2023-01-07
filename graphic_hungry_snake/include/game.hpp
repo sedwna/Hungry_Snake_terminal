@@ -37,11 +37,13 @@ private:
     sf::Texture texture;
     sf::Texture snake_image;
     sf::Texture frog_image;
+    sf::Texture frog2_image;
     //---------------------------------------------
 
 public:
     // Game(/* args */);
-    Frog frog;
+    Frog frog1;
+    Frog frog2;
     Snake snake;
     void runGame(sf::RenderWindow &window);
 };

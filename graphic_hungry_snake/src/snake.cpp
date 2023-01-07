@@ -8,3 +8,7 @@ int Snake::get_snakeSpeed()
 {
     return snakeSpeed;
 }
+void Snake::reset_snakeSpeed()
+{
+    snakeSpeed = 10;
+}

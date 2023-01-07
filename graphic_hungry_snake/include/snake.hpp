@@ -7,6 +7,7 @@ private:
 
 public:
     void set_snakeSpeed();
+    void reset_snakeSpeed();
     int get_snakeSpeed();
 
 };

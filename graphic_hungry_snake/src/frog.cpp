@@ -17,3 +17,7 @@ float Frog::frog_getSpeed()
 {
     return frogSpeed;
 }
+void Frog::frog_speed_reset()
+{
+    frogSpeed = 1;
+}

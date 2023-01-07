@@ -16,5 +16,6 @@ public:
     int frogStartpos();
     void frog_setSpeed();
     float frog_getSpeed();
+    void frog_speed_reset();
    
 };
