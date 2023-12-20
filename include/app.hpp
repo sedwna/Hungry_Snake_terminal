@@ -3,8 +3,7 @@
 #include "../include/snake.hpp"
 #include <string>
 #include <array>
-#define row 12
-#define column 9
+
 
 class App
 {
