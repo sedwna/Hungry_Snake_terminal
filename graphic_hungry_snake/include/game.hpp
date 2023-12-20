@@ -1,5 +1,5 @@
 #pragma once
-#include <sfml/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "../include/frog.hpp"
 #include "../include/snake.hpp"
 

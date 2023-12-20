@@ -10,5 +10,5 @@ private:
 public:
     Snake(/* args */);
     void snakeStatus(char playerMove, std::string board[][column]);
-    int ox = 3; // snake head position
+    int ox = column / 2; // snake head position
 };
