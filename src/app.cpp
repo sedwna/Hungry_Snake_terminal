@@ -7,7 +7,6 @@
 #include <time.h>
 #include <conio.h>
 
-
 using namespace std;
 
 // -------------------------------------------------------
@@ -78,13 +77,16 @@ int App::exec()
         {
             std::cerr << "[<!>] " << e.what() << endl;
         }
+        catch (...)
+        {
+
+            command.clear();
+
+            cerr << "[<!>] "
+                 << "app finished" << endl;
+            return EXIT_SUCCESS;
+        }
     }
-
-    command.clear();
-
-    cout << "[<!>] "
-         << "app finished" << endl;
-    return EXIT_SUCCESS;
 }
 // -------------------------------------------------------
 void App::runGame()
@@ -206,4 +208,3 @@ void App::clear() const
     splashScreen();
 }
 // -------------------------------------------------------
-
