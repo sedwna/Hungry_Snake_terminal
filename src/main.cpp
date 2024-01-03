@@ -1,11 +1,11 @@
 #include <iostream>
 #include "../include/app.hpp"
 
-
 using namespace std;
 
 int main()
 {
+    cout << "hello" << endl;
     App app;
     try
     {
