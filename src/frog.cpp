@@ -12,7 +12,6 @@ void Frog::frogStatus(int random, std::string board[][column], int down)
 }
 int Frog::generateRandom()
 
-
 {
     srand((unsigned)time(NULL));
     int random = rand() % column;

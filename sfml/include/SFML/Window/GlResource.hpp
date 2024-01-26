@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2017 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -37,8 +37,6 @@ namespace sf
 
 class Context;
 
-typedef void(*ContextDestroyCallback)(void*);
-
 ////////////////////////////////////////////////////////////
 /// \brief Base class for classes that require an OpenGL context
 ///
@@ -60,17 +58,10 @@ protected:
     ~GlResource();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Register a function to be called when a context is destroyed
-    ///
-    /// This is used for internal purposes in order to properly
-    /// clean up OpenGL resources that cannot be shared between
-    /// contexts.
-    ///
-    /// \param callback Function to be called when a context is destroyed
-    /// \param arg      Argument to pass when calling the function
+    /// \brief Empty function for ABI compatibility, use acquireTransientContext instead
     ///
     ////////////////////////////////////////////////////////////
-    static void registerContextDestroyCallback(ContextDestroyCallback callback, void* arg);
+    static void ensureGlContext();
 
     ////////////////////////////////////////////////////////////
     /// \brief RAII helper class to temporarily lock an available context for use
@@ -90,6 +81,9 @@ protected:
         ///
         ////////////////////////////////////////////////////////////
         ~TransientContextLock();
+
+    private:
+        Context* m_context; ///< Temporary context, in case we needed to create one
     };
 };
 
