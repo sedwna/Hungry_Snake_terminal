@@ -1,7 +1,3 @@
-Here’s a comprehensive `README.md` that includes information about both the **terminal version** and the **graphical version** of your **Hungry Snake Game**. This README provides an overview of both versions, instructions for running them, and details about the code structure.
-
----
-
 # Hungry Snake Game
 
 Welcome to the **Hungry Snake Game**! This project includes two versions of the game:
@@ -61,8 +57,7 @@ The **Hungry Snake Game** is a fun and interactive game where the player control
 #### Steps to Run
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/hungry-snake-game.git
-   cd hungry-snake-game
+   git clone https://github.com/sedwna/Hungry-Snake-Adventure.git
    ```
 
 2. **Compile the Code**:
