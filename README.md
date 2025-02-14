@@ -87,8 +87,7 @@ The **Hungry Snake Game** is a fun and interactive game where the player control
 #### Steps to Run
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/hungry-snake-game.git
-   cd hungry-snake-game
+   git clone https://github.com/sedwna/Hungry-Snake-Adventure.git
    ```
 
 2. **Install SFML** (if not already installed):
